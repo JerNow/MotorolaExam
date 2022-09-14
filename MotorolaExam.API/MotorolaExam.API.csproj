@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MotorolaExam.AuthDB\MotorolaExam.AuthDB.csproj" />
+    <ProjectReference Include="..\MotorolaExam.EntitiesDb\MotorolaExam.EntitiesDb.csproj" />
   </ItemGroup>
 
 </Project>
