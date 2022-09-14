@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.RegisterServices();
 builder.AddCustomAuthentication();
 builder.AddCustomSwagger();
+builder.AddCustomCors();
 
 var app = builder.Build();
 
