@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorolaExam.AuthDB", "Moto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorolaExam.EntitiesDb", "MotorolaExam.EntitiesDb\MotorolaExam.EntitiesDb.csproj", "{F117C645-E6AA-4811-A9A7-43643C905488}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorolaExam.Services", "MotorolaExam.Services\MotorolaExam.Services.csproj", "{DDCFBC8F-CC6F-4914-BA69-C2D92BADF003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F117C645-E6AA-4811-A9A7-43643C905488}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F117C645-E6AA-4811-A9A7-43643C905488}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F117C645-E6AA-4811-A9A7-43643C905488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDCFBC8F-CC6F-4914-BA69-C2D92BADF003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCFBC8F-CC6F-4914-BA69-C2D92BADF003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCFBC8F-CC6F-4914-BA69-C2D92BADF003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCFBC8F-CC6F-4914-BA69-C2D92BADF003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

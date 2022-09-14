@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using MotorolaExam.AuthDB.Context;
 using MotorolaExam.EntitiesDb.Context;
 using MotorolaExam.EntitiesDb.DAL.UnitOfWork;
+using MotorolaExam.Services.Services.Controllers;
+using MotorolaExam.Services.Services.Interfaces;
 
 namespace MotorolaExam.API.Startup
 {
@@ -21,6 +23,7 @@ namespace MotorolaExam.API.Startup
                   .AddEntityFrameworkStores<AuthorizationDbContext>();
 
          builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+         builder.Services.AddScoped<IMyAuthorizationService, MyAuthorizationService>();
 
 
          return builder;

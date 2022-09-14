@@ -7,6 +7,8 @@ builder.Services.AddControllers();
 
 // Add services to the container.
 builder.RegisterServices();
+builder.AddCustomAuthentication();
+builder.AddCustomSwagger();
 
 var app = builder.Build();
 
@@ -15,6 +17,7 @@ app.ConfigureSwagger();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
