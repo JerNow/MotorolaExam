@@ -1,6 +1,6 @@
 ﻿namespace MotorolaExam.API.Startup
 {
-   public static class CORSConfigurationcs
+   public static class CORSConfiguration
    {
       public static WebApplicationBuilder AddCustomCors(this WebApplicationBuilder builder)
       {

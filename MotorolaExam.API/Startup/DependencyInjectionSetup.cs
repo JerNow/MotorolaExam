@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MotorolaExam.API.Middleware;
 using MotorolaExam.AuthDB.Context;
 using MotorolaExam.EntitiesDb.Context;
 using MotorolaExam.EntitiesDb.DAL.UnitOfWork;
@@ -24,6 +25,7 @@ namespace MotorolaExam.API.Startup
 
          builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
          builder.Services.AddScoped<IMyAuthorizationService, MyAuthorizationService>();
+         builder.Services.AddScoped<LogHandlerMiddleware>();
 
 
          return builder;
