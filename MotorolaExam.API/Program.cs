@@ -11,6 +11,7 @@ builder.AddCustomAuthentication();
 builder.AddCustomSwagger();
 builder.AddCustomCors();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

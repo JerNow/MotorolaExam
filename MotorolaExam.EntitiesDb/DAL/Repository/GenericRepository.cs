@@ -40,10 +40,49 @@ namespace MotorolaExam.EntitiesDb.DAL.Repository
       public async Task<List<T>> GetAllWithIncludeAsync(Expression<Func<T, object>> criteria)
          => await _dbSet.Include(criteria).ToListAsync();
 
+      public async Task<List<T>> GetAllWithIncludeAndIncludeAsync(
+         Expression<Func<T, object>> criteriaIncludeFirst,
+         Expression<Func<T, object>> criteriaIncludeSecond)
+            => await _dbSet.Include(criteriaIncludeFirst)
+                           .Include(criteriaIncludeSecond)
+                           .ToListAsync();
+
+      public async Task<List<T>> GetAllWithIncludeAndIncludeAndIncludeAsync(
+         Expression<Func<T, object>> criteriaIncludeFirst,
+         Expression<Func<T, object>> criteriaIncludeSecond,
+         Expression<Func<T, object>> criteriaIncludeThird)
+            => await _dbSet.Include(criteriaIncludeFirst)
+                           .Include(criteriaIncludeSecond)
+                           .Include(criteriaIncludeThird)
+                           .ToListAsync();
+
       public async Task<T> GetSingleAsync(Expression<Func<T, bool>> condition)
          => await _dbSet.Where(condition).FirstOrDefaultAsync();
 
       public async Task<T> GetSingleWithIncludeAsync(Expression<Func<T, bool>> condition, Expression<Func<T, object>> criteria)
          => await _dbSet.Where(condition).Include(criteria).FirstOrDefaultAsync();
+
+      public async Task<T> GetSingleWithIncludeAndIncludeAsync(
+         Expression<Func<T, bool>> condition,
+         Expression<Func<T, object>> criteriaIncludeFirst,
+         Expression<Func<T, object>> criteriaIncludeSecond)
+            => await _dbSet.Where(condition)
+                           .Include(criteriaIncludeFirst)
+                           .Include(criteriaIncludeSecond)
+                           .FirstOrDefaultAsync();
+
+      public async Task<T> GetSingleWithIncludeAndIncludeAndIncludeAsync(
+         Expression<Func<T, bool>> condition,
+         Expression<Func<T, object>> criteriaIncludeFirst,
+         Expression<Func<T, object>> criteriaIncludeSecond,
+         Expression<Func<T, object>> criteriaIncludeThird)
+            => await _dbSet.Where(condition)
+                           .Include(criteriaIncludeFirst)
+                           .Include(criteriaIncludeSecond)
+                           .Include(criteriaIncludeThird)
+                          .FirstOrDefaultAsync();
+
+      public async Task<List<T>> GetAllWithConditionAndWithIncludeAsync(Expression<Func<T, bool>> condition, Expression<Func<T, object>> criteria)
+         => await _dbSet.Where(condition).Include(criteria).ToListAsync();
    }
 }
