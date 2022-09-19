@@ -44,11 +44,12 @@ namespace MotorolaExam.API.Controllers
       {
          var userFromDb = await _authorizationService.DoesUserExistAsync(userLoginRequest);
          if (userFromDb == null)
-            return BadRequest("User with that email doesnt exist");
+            return BadRequest("Invalid creditentials"); //no user in Db found
 
          var result = await _authorizationService.LoginUser(userLoginRequest, userFromDb);
          if (result == string.Empty)
-            return BadRequest("Invalid creditentials");
+            return BadRequest("Invalid creditentials"); //password mismatch
+
          return Ok(result);
       }
 
