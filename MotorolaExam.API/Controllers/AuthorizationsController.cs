@@ -24,7 +24,7 @@ namespace MotorolaExam.API.Controllers
          var checkResult = await _authorizationService.DoesUserExistAsync(userRegistrationDto);
          if (checkResult == true)
             return BadRequest("User with that email already exist");
-         var registerResult = string.Empty;
+         MotorolaExam.Services.Models.AuthorizationResult registerResult;
          try
          {
             registerResult = await _authorizationService.RegisterNewUser(userRegistrationDto);
@@ -33,8 +33,8 @@ namespace MotorolaExam.API.Controllers
          {
             return StatusCode(500);
          }
-         if (registerResult == string.Empty)
-            return BadRequest("Creation process failed, try again with different credentials");
+         if (!registerResult.Success)
+            return BadRequest(registerResult.Message);
          return Ok(registerResult);
       }
 
@@ -46,11 +46,11 @@ namespace MotorolaExam.API.Controllers
          if (userFromDb == null)
             return BadRequest("Invalid creditentials"); //no user in Db found
 
-         var result = await _authorizationService.LoginUser(userLoginRequest, userFromDb);
-         if (result == string.Empty)
+         var loginResult = await _authorizationService.LoginUser(userLoginRequest, userFromDb);
+         if (!loginResult.Success)
             return BadRequest("Invalid creditentials"); //password mismatch
 
-         return Ok(result);
+         return Ok(loginResult.Message);
       }
 
       [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
@@ -61,7 +61,7 @@ namespace MotorolaExam.API.Controllers
          var checkResult = await _authorizationService.DoesUserExistAsync(userRegistrationDto);
          if (checkResult == true)
             return BadRequest("User with that email already exist");
-         var registerResult = string.Empty;
+         MotorolaExam.Services.Models.AuthorizationResult registerResult;
          try
          {
             registerResult = await _authorizationService.RegisterNewUser(userRegistrationDto);
@@ -70,19 +70,19 @@ namespace MotorolaExam.API.Controllers
          {
             return StatusCode(500);
          }
-         if (registerResult == string.Empty)
-            return BadRequest("Creation process failed, try again with different credentials");
-         var roleAdditionresult = false;
+         if (!registerResult.Success)
+            return BadRequest(registerResult.Message);
+         var roleAdditionResult = false;
          try
          {
-            roleAdditionresult = await _authorizationService.AddAdminRole(userRegistrationDto);
+            roleAdditionResult = await _authorizationService.AddAdminRole(userRegistrationDto);
          } 
          catch (Exception e)
          {
             StatusCode(500);
          }
-         if (roleAdditionresult)
-            return Ok(registerResult);
+         if (roleAdditionResult)
+            return Ok(registerResult.Message);
          return StatusCode(500);
       }
    }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MotorolaExam.Services.Models;
 using MotorolaExam.Services.Models.DTOs.Authorization;
 using MotorolaExam.Services.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,7 +23,7 @@ namespace MotorolaExam.Services.Services.Controllers
          _roleManager = roleManager;
       }
 
-      public async Task<string> RegisterNewUser(UserRegistrationDto userRegistrationDto)
+      public async Task<AuthorizationResult> RegisterNewUser(UserRegistrationDto userRegistrationDto)
       {
          var newUser = new IdentityUser() { Email = userRegistrationDto.Email, UserName = userRegistrationDto.Username };
          var isCreated = await _userManager.CreateAsync(newUser, userRegistrationDto.Password);
@@ -30,30 +31,30 @@ namespace MotorolaExam.Services.Services.Controllers
          {
             var jwtToken = await GenerateJwtToken(newUser);
 
-            return jwtToken;
+            return new AuthorizationResult(true, jwtToken);
          } 
          else
          {
             var errors = new StringBuilder();
             foreach (string error in isCreated.Errors.Select(x => x.Description).ToList())
                errors.AppendLine(error);
-            return errors.ToString();
+            return new AuthorizationResult(false, errors.ToString());
          }
          throw new Exception("Can't create user");
       }
 
-      public async Task<string> LoginUser(UserLoginRequestDto userLoginRequest, IdentityUser user)
+      public async Task<AuthorizationResult> LoginUser(UserLoginRequestDto userLoginRequest, IdentityUser user)
       {
          var isCorrect = await _userManager.CheckPasswordAsync(user, userLoginRequest.Password);
 
          if (!isCorrect)
          {
-            return string.Empty;
+            return new AuthorizationResult(false, "Password mismatch");
          }
 
          var jwtToken = await GenerateJwtToken(user);
 
-         return jwtToken;
+         return new AuthorizationResult(true, jwtToken);
       }
 
       public async Task<IdentityUser> DoesUserExistAsync(UserLoginRequestDto userLoginRequest)
@@ -79,7 +80,7 @@ namespace MotorolaExam.Services.Services.Controllers
 
       public async Task<bool> AddAdminRole(UserRegistrationDto userRegistrationDto)
       {
-         var user = await _userManager.FindByEmailAsync(userRegistrationDto.Email);
+         var user = await _userManager.FindByNameAsync(userRegistrationDto.Username);
          var result = await _userManager.AddToRoleAsync(user, "Admin");
 
          if (result.Succeeded)
