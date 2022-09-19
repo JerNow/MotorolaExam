@@ -34,7 +34,6 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var newMotorolaProject = _mapper.Map<MotorolaProject>(motorolaProjectCreateDto);
          await _unitOfWork.MotorolaProjects.AddAsync(newMotorolaProject);
-         await _unitOfWork.CompleteUnitOfWorkAsync();
          return _mapper.Map<MotorolaProjectReadDto>(newMotorolaProject);
       }
 

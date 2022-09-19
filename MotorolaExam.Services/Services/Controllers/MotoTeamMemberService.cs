@@ -27,6 +27,9 @@ namespace MotorolaExam.Services.Services.Controllers
       public async Task<MotoTeamMemberReadDto> GetSingleAsync(Expression<Func<MotoTeamMember, bool>> condition)
       {
          var motoTeamMember = await _unitOfWork.MotoTeamMembers.GetSingleAsync(condition);
+         if (motoTeamMember is null)
+            throw new ArgumentNullException($"Motorola team member not found");
+
          return _mapper.Map<MotoTeamMemberReadDto>(motoTeamMember);
       }
 
@@ -34,7 +37,6 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var newMotoTeamMember = _mapper.Map<MotoTeamMember>(motoTeamMemberCreateDto);
          await _unitOfWork.MotoTeamMembers.AddAsync(newMotoTeamMember);
-         await _unitOfWork.CompleteUnitOfWorkAsync();
          return _mapper.Map<MotoTeamMemberReadDto>(newMotoTeamMember);
       }
 

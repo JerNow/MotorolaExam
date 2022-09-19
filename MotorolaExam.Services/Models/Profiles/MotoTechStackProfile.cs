@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MotorolaExam.EntitiesDb.Models.Entities;
+using MotorolaExam.Services.Models.DTOs.MotoTeamMember;
 using MotorolaExam.Services.Models.DTOs.MotoTechStack;
 
 namespace MotorolaExam.Services.Models.Profiles
@@ -9,6 +10,8 @@ namespace MotorolaExam.Services.Models.Profiles
       public MotoTechStackProfile()
       {
          CreateMap<MotoTechStack, MotoTechStackReadDto>();
+         CreateMap<MotoTechStackCreateDto, MotoTechStack>();
+         CreateMap<MotoTechStackUpdateDto, MotoTechStack>().ReverseMap();
       }
    }
 }
