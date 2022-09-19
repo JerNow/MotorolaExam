@@ -24,7 +24,18 @@ namespace MotorolaExam.API.Controllers
 
       [HttpGet("{id}", Name = "GetSingleMotoTeamMember")]
       public async Task<IActionResult> GetSingleMotoTeamMember(int id)
-         => Ok(await _motoTeamMemberService.GetSingleAsync(mtm => mtm.Id == id));
+      {
+         MotoTeamMemberReadDto teamMember;
+         try
+         {
+            teamMember = await _motoTeamMemberService.GetSingleAsync(mtm => mtm.Id == id);
+         }
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
+         return Ok(teamMember);
+      }
 
       [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
       [HttpPost]
@@ -38,7 +49,14 @@ namespace MotorolaExam.API.Controllers
       [HttpDelete("{id}")]
       public async Task<IActionResult> DeleteMotoTeamMember(int id)
       {
-         await _motoTeamMemberService.DeleteAsync(mtm => mtm.Id == id);
+         try
+         {
+            await _motoTeamMemberService.DeleteAsync(mtm => mtm.Id == id);
+         }
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
          return NoContent();
       }
 
@@ -46,7 +64,14 @@ namespace MotorolaExam.API.Controllers
       [HttpPut("{id}")]
       public async Task<IActionResult> PutMotoTeamMember(int id, MotoTeamMemberUpdateDto motoTeamMemberUpdateDto)
       {
-         await _motoTeamMemberService.PutAsync(mtm => mtm.Id == id, motoTeamMemberUpdateDto);
+         try
+         {
+            await _motoTeamMemberService.PutAsync(mtm => mtm.Id == id, motoTeamMemberUpdateDto);
+         }
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
          return NoContent();
       }
 
@@ -54,7 +79,14 @@ namespace MotorolaExam.API.Controllers
       [HttpPatch("{id}")]
       public async Task<IActionResult> PatchMotoTeamMember(int id, JsonPatchDocument motoTeamMemberPatch)
       {
-         await _motoTeamMemberService.PatchAsync(mtm => mtm.Id == id, motoTeamMemberPatch);
+         try
+         {
+            await _motoTeamMemberService.PatchAsync(mtm => mtm.Id == id, motoTeamMemberPatch);
+         }
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
          return NoContent();
       }
    }

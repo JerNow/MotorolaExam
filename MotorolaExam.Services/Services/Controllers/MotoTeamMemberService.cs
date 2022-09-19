@@ -42,7 +42,7 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var motoTeamMemberToDelete = await _unitOfWork.MotoTeamMembers.GetSingleAsync(condition);
          if (motoTeamMemberToDelete is null)
-            throw new ArgumentNullException($"Educational material not found");
+            throw new ArgumentNullException($"Motorola team member not found");
 
          await _unitOfWork.MotoTeamMembers.DeleteAsync(motoTeamMemberToDelete);
          await _unitOfWork.CompleteUnitOfWorkAsync();
@@ -52,7 +52,7 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var motoTeamMemberToUpdate = await _unitOfWork.MotoTeamMembers.GetSingleAsync(condition);
          if (motoTeamMemberToUpdate is null)
-            throw new ArgumentNullException($"Educational material not found");
+            throw new ArgumentNullException($"Motorola team member not found");
 
          _mapper.Map(motoTeamMemberUpdateDto, motoTeamMemberToUpdate);
 
@@ -63,7 +63,7 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var motoTeamMemberFromDb = await _unitOfWork.MotoTeamMembers.GetSingleAsync(condition);
          if (motoTeamMemberFromDb is null)
-            throw new ArgumentNullException($"Educational material not found");
+            throw new ArgumentNullException($"Motorola team member not found");
 
          var motorolaTeamMemberToPatch = _mapper.Map<MotoTeamMemberUpdateDto>(motoTeamMemberFromDb);
 

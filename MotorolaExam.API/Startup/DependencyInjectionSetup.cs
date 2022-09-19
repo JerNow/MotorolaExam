@@ -26,6 +26,7 @@ namespace MotorolaExam.API.Startup
          builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
          builder.Services.AddScoped<IMyAuthorizationService, MyAuthorizationService>();
          builder.Services.AddScoped<IMotorolaProjectService, MotorolaProjectService>();
+         builder.Services.AddScoped<IMotorolaTeamService, MotorolaTeamService>();
          builder.Services.AddScoped<IMotoTeamMemberService, MotoTeamMemberService>();
          builder.Services.AddScoped<LogHandlerMiddleware>();
 
