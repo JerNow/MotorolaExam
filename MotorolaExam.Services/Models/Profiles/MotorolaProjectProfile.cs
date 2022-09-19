@@ -10,7 +10,7 @@ namespace MotorolaExam.Services.Models.Profiles
       {
          CreateMap<MotorolaProject, MotorolaProjectReadDto>();
          CreateMap<MotorolaProjectCreateDto, MotorolaProject>();
-         CreateMap<MotorolaProjectUpdateDto, MotorolaProject>();
+         CreateMap<MotorolaProjectUpdateDto, MotorolaProject>().ReverseMap();
       }
    }
 }

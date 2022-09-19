@@ -55,7 +55,7 @@ namespace MotorolaExam.EntitiesDb.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("MotorolaProjects");
+                    b.ToTable("MotorolaProjects", (string)null);
                 });
 
             modelBuilder.Entity("MotorolaExam.EntitiesDb.Models.Entities.MotorolaTeam", b =>
@@ -73,7 +73,7 @@ namespace MotorolaExam.EntitiesDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MotorolaTeams");
+                    b.ToTable("MotorolaTeams", (string)null);
                 });
 
             modelBuilder.Entity("MotorolaExam.EntitiesDb.Models.Entities.MotoTeamMember", b =>
@@ -104,7 +104,7 @@ namespace MotorolaExam.EntitiesDb.Migrations
 
                     b.HasIndex("MotorolaTeamId");
 
-                    b.ToTable("MotoTeamMembers");
+                    b.ToTable("MotoTeamMembers", (string)null);
                 });
 
             modelBuilder.Entity("MotorolaExam.EntitiesDb.Models.Entities.MotoTechStack", b =>
@@ -127,7 +127,7 @@ namespace MotorolaExam.EntitiesDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MotoTechStacks");
+                    b.ToTable("MotoTechStacks", (string)null);
                 });
 
             modelBuilder.Entity("MotorolaExam.EntitiesDb.Models.Entities.Review", b =>
@@ -150,7 +150,7 @@ namespace MotorolaExam.EntitiesDb.Migrations
 
                     b.HasIndex("MotorolaProjectId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Review", (string)null);
                 });
 
             modelBuilder.Entity("MotorolaExam.EntitiesDb.Models.Entities.MotorolaProject", b =>

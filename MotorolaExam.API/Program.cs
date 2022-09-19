@@ -1,9 +1,13 @@
 using MotorolaExam.API.Startup;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(s =>
+{
+   s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+});
 
 // Add services to the container.
 builder.RegisterServices();

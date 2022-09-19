@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using MotorolaExam.EntitiesDb.DAL.UnitOfWork;
 using MotorolaExam.EntitiesDb.Models.Entities;
+using MotorolaExam.Services.Models.DTOs.MotorolaProject;
 using MotorolaExam.Services.Models.DTOs.MotoTeamMember;
 using MotorolaExam.Services.Services.Interfaces;
 using System.Linq.Expressions;
@@ -60,12 +61,17 @@ namespace MotorolaExam.Services.Services.Controllers
 
       public async Task PatchAsync(Expression<Func<MotoTeamMember, bool>> condition, JsonPatchDocument motoTeamMemberPatch)
       {
-         var motoTeamMemberToUpdate = await _unitOfWork.MotoTeamMembers.GetSingleAsync(condition);
-         if (motoTeamMemberToUpdate is null)
+         var motoTeamMemberFromDb = await _unitOfWork.MotoTeamMembers.GetSingleAsync(condition);
+         if (motoTeamMemberFromDb is null)
             throw new ArgumentNullException($"Educational material not found");
 
-         motoTeamMemberPatch.ApplyTo(motoTeamMemberToUpdate);
-         await _unitOfWork.CompleteUnitOfWorkAsync();
+         var motorolaTeamMemberToPatch = _mapper.Map<MotoTeamMemberUpdateDto>(motoTeamMemberFromDb);
+
+         motoTeamMemberPatch.ApplyTo(motorolaTeamMemberToPatch);
+
+         _mapper.Map(motorolaTeamMemberToPatch, motoTeamMemberFromDb);
+
+         await _unitOfWork.MotoTeamMembers.EditAsync(motoTeamMemberFromDb);
       }
    }
 }

@@ -21,12 +21,12 @@ namespace MotorolaExam.Services.Services.Controllers
 
       public async Task<List<MotorolaProjectReadDto>> GetAllAsync()
       {
-         var allMotorolaProjects = await _unitOfWork.MotorolaProjects.GetAllWithIncludeAndIncludeAsync(mp => mp.Team, mp => mp.MotoTechStack);
+         var allMotorolaProjects = await _unitOfWork.MotorolaProjects.GetAllMotorolaProjectsAsync();
          return _mapper.Map<List<MotorolaProjectReadDto>>(allMotorolaProjects);
       }
       public async Task<MotorolaProjectReadDto> GetSingleAsync(Expression<Func<MotorolaProject, bool>> condition)
       {
-         var motorolaProject = await _unitOfWork.MotorolaProjects.GetSingleWithIncludeAndIncludeAsync(condition, mp => mp.Team, mp => mp.MotoTechStack);
+         var motorolaProject = await _unitOfWork.MotorolaProjects.GetSingleMotorolaProjectAsync(condition);
          return _mapper.Map<MotorolaProjectReadDto>(motorolaProject);
       }
 
@@ -42,7 +42,7 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var motorolaProjectToDelete = await _unitOfWork.MotorolaProjects.GetSingleAsync(condition);
          if (motorolaProjectToDelete is null)
-            throw new ArgumentNullException($"Educational material not found");
+            throw new ArgumentNullException($"Motorola project not found");
 
          await _unitOfWork.MotorolaProjects.DeleteAsync(motorolaProjectToDelete);
          await _unitOfWork.CompleteUnitOfWorkAsync();
@@ -52,7 +52,7 @@ namespace MotorolaExam.Services.Services.Controllers
       {
          var motorolaProjectToUpdate = await _unitOfWork.MotorolaProjects.GetSingleAsync(condition);
          if (motorolaProjectToUpdate is null)
-            throw new ArgumentNullException($"Educational material not found");
+            throw new ArgumentNullException($"Motorola project not found");
 
          _mapper.Map(motorolaProjectUpdateDto, motorolaProjectToUpdate);
 
@@ -61,12 +61,17 @@ namespace MotorolaExam.Services.Services.Controllers
 
       public async Task PatchAsync(Expression<Func<MotorolaProject, bool>> condition, JsonPatchDocument motorolaProjectPatch)
       {
-         var motorolaProjectToUpdate = await _unitOfWork.MotorolaProjects.GetSingleAsync(condition);
-         if (motorolaProjectToUpdate is null)
-            throw new ArgumentNullException($"Educational material not found");
+         var motorolaProjectFromDb = await _unitOfWork.MotorolaProjects.GetSingleAsync(condition);
+         if (motorolaProjectFromDb is null)
+            throw new ArgumentNullException($"Motorola project not found");
 
-         motorolaProjectPatch.ApplyTo(motorolaProjectToUpdate);
-         await _unitOfWork.CompleteUnitOfWorkAsync();
+         var motorolaProjectToPatch = _mapper.Map<MotorolaProjectUpdateDto>(motorolaProjectFromDb);
+
+         motorolaProjectPatch.ApplyTo(motorolaProjectToPatch);
+
+         _mapper.Map(motorolaProjectToPatch, motorolaProjectFromDb);
+
+         await _unitOfWork.MotorolaProjects.EditAsync(motorolaProjectFromDb);
       }
    }
 }

@@ -5,7 +5,7 @@ namespace MotorolaExam.EntitiesDb.DAL.UnitOfWork
 {
    public interface IUnitOfWork
    {
-      IGenericRepository<MotorolaProject> MotorolaProjects { get; }
+      IMotorolaProjectRepository MotorolaProjects { get; }
       IGenericRepository<MotorolaTeam> MotorolaTeams { get; }
       IGenericRepository<MotoTeamMember> MotoTeamMembers { get; }
       IGenericRepository<MotoTechStack> MotoTechStacks { get; }

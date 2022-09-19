@@ -24,7 +24,18 @@ namespace MotorolaExam.API.Controllers
 
       [HttpGet("{id}", Name = "GetSingleMotorolaProject")]
       public async Task<IActionResult> GetSingleMotorolaProject(int id)
-         => Ok(await _motorolaProjectService.GetSingleAsync(mp => mp.Id == id));
+      {
+         MotorolaProjectReadDto motorolaProject;
+         try
+         {
+            motorolaProject = await _motorolaProjectService.GetSingleAsync(mp => mp.Id == id);
+         } 
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
+         return Ok(motorolaProject);
+      }
 
       [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
       [HttpPost]
@@ -38,7 +49,14 @@ namespace MotorolaExam.API.Controllers
       [HttpDelete("{id}")]
       public async Task<IActionResult> DeleteMotorolaProject(int id)
       {
-         await _motorolaProjectService.DeleteAsync(mp => mp.Id == id);
+         try
+         {
+            await _motorolaProjectService.DeleteAsync(mp => mp.Id == id);
+         } 
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
          return NoContent();
       }
 
@@ -46,7 +64,14 @@ namespace MotorolaExam.API.Controllers
       [HttpPut("{id}")]
       public async Task<IActionResult> PutMotorolaProject(int id, MotorolaProjectUpdateDto motorolaProjectUpdateDto)
       {
-         await _motorolaProjectService.PutAsync(mp => mp.Id == id, motorolaProjectUpdateDto);
+         try
+         {
+            await _motorolaProjectService.PutAsync(mp => mp.Id == id, motorolaProjectUpdateDto);
+         }
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
          return NoContent();
       }
 
@@ -54,7 +79,14 @@ namespace MotorolaExam.API.Controllers
       [HttpPatch("{id}")]
       public async Task<IActionResult> PatchMotorolaProject(int id, JsonPatchDocument motorolaProjectPatch)
       {
-         await _motorolaProjectService.PatchAsync(mp => mp.Id == id, motorolaProjectPatch);
+         try
+         {
+            await _motorolaProjectService.PatchAsync(mp => mp.Id == id, motorolaProjectPatch);
+         } 
+         catch (ArgumentNullException e)
+         {
+            return NotFound();
+         }
          return NoContent();
       }
    }
